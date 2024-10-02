@@ -24,8 +24,8 @@ public:
         this->isLeaf = isLeaf;
         this->maxkeysize = maxkeysize;
         this->currkeysize = 0;                       // Initially, no keys are in the node
-        this->minleafkeysize = (maxkeysize + 1) / 2; // MINLEAFKEYSIZE
-        this->minkeysize = maxkeysize / 2;           // minkeysize
+        this->minleafkeysize = (maxkeysize + 1) / 2; // minkeysize for leaf node
+        this->minkeysize = maxkeysize / 2;           // minkeysize for internal node
         keys.resize(maxkeysize);                     // Pre-allocate space for the keys
         pointers.resize(maxkeysize + 1, nullptr);    // Pre-allocate for pointers (maxkeysize + 1)
     }
@@ -46,6 +46,8 @@ public:
     void deleteKey(int);
     Node *searchKey();
     void insert(int);
+    bool BorrowNode(Node *, Node *);
+    void MergeNode(Node *, Node *);
 };
 
 Bplustree::Bplustree(/* args */)
@@ -56,38 +58,33 @@ Bplustree::~Bplustree()
 {
 }
 
-Node **Bplustree::findNode(int key)
+Node *Bplustree::findNode(int key)
 {
     Node *CurrNode = root;
-    Node *ParentNode = nullptr;
     while (!CurrNode->isLeaf) // Traverse to leaf node
     {
-        ParentNode = CurrNode;
         auto UpperBound = upper_bound(CurrNode->keys.begin(), CurrNode->keys.end(), key);
         int index = UpperBound - CurrNode->keys.begin();
         CurrNode = CurrNode->pointers[index];
     }
-    Node **result = new Node *[2];
-    result[0] = ParentNode;
-    result[1] = CurrNode;
-    return result; // return the leaf node
+
+    return CurrNode; // return the leaf node
 };
 
 void Bplustree::deleteKey(int key)
 {
-    Node **ResultNode = this->findNode(key);
-    Node *ParentNode = ResultNode[0];
-    Node *LeadNode = ResultNode[1];
+    Node *LeafNode = this->findNode(key);
+    Node *ParentNode = this.FindParent(this.root, LeafNode);
 
     // Delete from node
     bool found = false;
-    for (int i = 0; i < TargetNode->currkeysize; i++)
+    for (int i = 0; i < LeafNode->currkeysize; i++)
     {
-        if (TargetNode->keys[i] == key)
+        if (LeafNode->keys[i] == key)
         {
-            TargetNode->keys.erase(i);
-            TargetNode->recordpointer.erase(i);
-            TargetNode->currkeysize = TargetNode->keys.size();
+            LeafNode->keys.erase(i);
+            LeafNode->recordpointer.erase(i);
+            LeafNode->currkeysize = LeafNode->keys.size();
             found = true;
             break;
         }
@@ -95,10 +92,16 @@ void Bplustree::deleteKey(int key)
 
     if (found)
     {
+        bool success;
         // check for violation
-        if (TargetNode->currkeysize < TargetNode->minleafkeysize)
+        if (LeafNode->currkeysize < LeafNode->minleafkeysize)
         {
-            // check if neighbour can borrow
+            success = this.BorrowNode(ParentNode, LeafNode);
+
+            if (!success)
+            {
+                this.MergeNode(ParentNode, LeafNode);
+            }
         }
     }
     else
@@ -109,8 +112,20 @@ void Bplustree::deleteKey(int key)
     // Can borrow from left or right
 };
 
-void Bplustree::BorrowNode(Node *Node)
+void Bplustree::BorrowNode(Node *ParentNode, Node *LeafNode)
 {
+    // CheckIfLeft&RightExist
+
+    Node *RightNode = LeafNode->nextnode;
+    if (RightNode->currkeysize > RightNode->minleafkeysize)
+    {
+        int borrowedkey = RightNode->keys[0];
+        int *borrowedPointer = RightNode->recordpointer[0];
+    }
+    else if
+    {
+        // Check Left
+    }
 }
 
 void Bplustree::MergeNode(Node *Node1, Node *Node2)
