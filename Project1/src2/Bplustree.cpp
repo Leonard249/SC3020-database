@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>    //Used for initialising keys and pointers
 #include <algorithm> //Used for sorting arrays
+#include <record.h>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ public:
     int maxkeysize;              // Max number of keys in a node
     vector<int> keys;            // Array of Keys
     vector<Node *> pointers;     // Array of Pointers
-    vector<int *> recordpointer; // RecordPointers
+    vector<record *> recordpointer; // RecordPointers
     Node *nextnode;
     int minkeysize;
     int minleafkeysize;
@@ -128,8 +129,9 @@ void Bplustree::BorrowNode(Node *ParentNode, Node *LeafNode)
     }
 }
 
-void Bplustree::MergeNode(Node *Node1, Node *Node2)
+void Bplustree::MergeNode(Node *ParentNode, Node *LeadNode)
 {
+
 }
 
 Node *Bplustree::findParent(Node *cursor, Node *child)
