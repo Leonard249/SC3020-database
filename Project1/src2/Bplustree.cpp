@@ -13,6 +13,7 @@ class Node
         int maxkeysize;                    //Max number of keys in a node    
         vector<int> keys;               //Array of Keys 
         vector<Node*> pointers;         //Array of Pointers
+        vector<int*> recordpointer;
         Node* nextnode;
 
 
@@ -37,11 +38,13 @@ class Bplustree
         Bplustree();    
 
         //Functions
-        void delete();
-        void searchKey();
-        void insert();
-        
+        Node* findNode(int);
+        void deleteKey(int);
+        Node* searchKey();
+        void insert(int);
 
+
+      
 
 };
 
@@ -53,4 +56,22 @@ Bplustree::~Bplustree()
 {
 }
 
+Node* Bplustree::findNode(int key)
+{
+    Node* CurrNode = root;
+    while(!CurrNode->isLeaf)         //Traverse to leaf node
+    {   
+        auto UpperBound = upper_bound(CurrNode->keys.begin(), CurrNode->keys.end(), key);
+        int index = UpperBound - CurrNode->keys.begin();
+        CurrNode = CurrNode->pointers[index];
+
+    }
+    return CurrNode;   //return the leaf node
+};
+
+
+void Bplustree::deleteKey(int key)
+{ 
+    Node* Node = this->findNode(key);
+};
 
