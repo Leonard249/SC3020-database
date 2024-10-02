@@ -24,10 +24,7 @@ class Node
         pointers.resize(maxkeysize + 1, nullptr); // Pre-allocate for pointers (maxkeysize + 1)
     }
 
-    ~Node(){
-
-    }
-
+    ~Node(){}
 
 };
 
@@ -40,10 +37,8 @@ class Bplustree
         Bplustree();    
 
         //Functions
-        void deleteNode();
+        void delete();
         void searchKey();
-        void display();
-        void getRoot();
         void insert();
         
 
