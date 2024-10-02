@@ -51,7 +51,7 @@ public:
                     cursor = cursor->pointers[i];
                     break;
                 }
-                if (i == cursor->currkeysize - 1)
+                if (i == cursor->currkeysize - 1) // if no larger number, use last pointer
                 {
                     cursor = cursor->pointers[i + 1];
                     break;
@@ -61,7 +61,7 @@ public:
         return cursor;
     }
 
-    void insert(int key)
+    void insertKey(int key)
     {
         Node *cursor = search(root, key);
         if (cursor->currkeysize < maxkeysize)
@@ -81,10 +81,10 @@ public:
     void splitLeafNode(Node *cursor, int key)
     {
         vector<int> virtualKey(cursor->keys);
-        virtualKey.push_back(key);
-        sort(virtualKey.begin(), virtualKey.end());
+        virtualKey.push_back(key);                  // add key to the end of virtualKey
+        sort(virtualKey.begin(), virtualKey.end()); // sort in ascending order
 
-        int split = (maxkeysize + 1) / 2;
+        int split = (maxkeysize + 1) / 2; // minimum number of keys
         Node *newLeaf = new Node(maxkeysize, true);
         cursor->currkeysize = split;
         for (int i = 0; i < split; i++)
@@ -115,7 +115,7 @@ public:
     }
 
     void insertInternal(int key, Node *cursor, Node *child)
-    {
+    { // insert
         if (cursor->currkeysize < maxkeysize)
         {
             int i = 0;
