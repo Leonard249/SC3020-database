@@ -1,7 +1,7 @@
 #include "Bplustree.h"
 #include <algorithm>
 #include <fstream>
-
+int NumberofNodes = 0;
 // Node constructor
 Node::Node(int maxkeysize, bool isLeaf)
 {
@@ -9,6 +9,7 @@ Node::Node(int maxkeysize, bool isLeaf)
     this->maxkeysize = maxkeysize;
     this->currkeysize = 0;
     keys.resize(maxkeysize);
+    NumberofNodes++;
     if (isLeaf)
     {
         recordPointers.resize(maxkeysize); // For leaf nodes only
@@ -26,7 +27,7 @@ Bplustree::Bplustree(int maxkeysize) : maxkeysize(maxkeysize)
 }
 
 // Search for a node that contains the key
-Node *Bplustree::search(Node *root, int key)
+Node *Bplustree::search(Node *root, float key)
 {
     Node *cursor = root;
     while (cursor && !cursor->isLeaf)
@@ -49,7 +50,7 @@ Node *Bplustree::search(Node *root, int key)
 }
 
 // Insert a key and record into the B+ Tree
-void Bplustree::insertKey(int key, Record *record)
+void Bplustree::insertKey(float key, Record *record)
 {
     Node *cursor = search(root, key);
     if (cursor->isLeaf)
@@ -72,9 +73,9 @@ void Bplustree::insertKey(int key, Record *record)
 }
 
 // Split a leaf node
-void Bplustree::splitLeafNode(Node *cursor, int key, Record *record)
+void Bplustree::splitLeafNode(Node *cursor, float key, Record *record)
 {
-    std::vector<int> virtualKey(cursor->keys);
+    std::vector<float> virtualKey(cursor->keys);
     std::vector<Record *> virtualRecordPointers(cursor->recordPointers);
     virtualKey.push_back(key);
     virtualRecordPointers.push_back(record);
@@ -115,7 +116,7 @@ void Bplustree::splitLeafNode(Node *cursor, int key, Record *record)
 }
 
 // Insert into an internal node
-void Bplustree::insertInternal(int key, Node *cursor, Node *child)
+void Bplustree::insertInternal(float key, Node *cursor, Node *child)
 {
     if (cursor->currkeysize < maxkeysize)
     {
@@ -133,9 +134,9 @@ void Bplustree::insertInternal(int key, Node *cursor, Node *child)
 }
 
 // Split an internal node
-void Bplustree::splitInternalNode(Node *cursor, int key, Node *child)
+void Bplustree::splitInternalNode(Node *cursor, float key, Node *child)
 {
-    std::vector<int> virtualKey(cursor->keys);
+    std::vector<float> virtualKey(cursor->keys);
     std::vector<Node *> virtualPointer(cursor->pointers);
     int i = 0;
     while (key > virtualKey[i] && i < cursor->currkeysize)

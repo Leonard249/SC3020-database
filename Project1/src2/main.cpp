@@ -8,6 +8,7 @@
 #include "Bplustree.h"
 using namespace std;
 // Function to read data from the file and store it in a vector of Record
+const int MAX = 10;
 int main()
 {
     // initialise disk
@@ -67,31 +68,34 @@ int main()
             continue; // Skip this record if there is an error
         }
         Record *recordPtr = disk->writeRecord(record);
-        recordnumber++;
-        // Bplustree.insertKey(recordPtr->FG_PCT_home, recordPtr);
+        recordnumber += 1;
+        Bplustree tree = Bplustree(MAX);
+        tree.insertKey(recordPtr->FG_PCT_home, recordPtr);
         records.push_back(record);
     }
 
     // task 1
 
     // Output the records
+    /*
     std::cout << "Records: " << std::endl;
-    for (const auto &record : records)
+    for (const auto &Record : records)
     {
-        std::cout << "Game Date: " << record.GAME_DATE_EST
-                  << ", Team ID: " << record.TEAM_ID_home
-                  << ", Points: " << record.PTS_home
-                  << ", FG%: " << record.FG_PCT_home
-                  << ", FT%: " << record.FT_PCT_home
-                  << ", FG3%: " << record.FG3_PCT_home
-                  << ", Assists: " << record.AST_home
-                  << ", Rebounds: " << record.REB_home
-                  << ", Home Team Wins: " << (record.HOME_TEAM_WINS ? "Yes" : "No")
+        std::cout << "Game Date: " << Record.GAME_DATE_EST
+                  << ", Team ID: " << Record.TEAM_ID_home
+                  << ", Points: " << Record.PTS_home
+                  << ", FG%: " << Record.FG_PCT_home
+                  << ", FT%: " << Record.FT_PCT_home
+                  << ", FG3%: " << Record.FG3_PCT_home
+                  << ", Assists: " << Record.AST_home
+                  << ", Rebounds: " << Record.REB_home
+                  << ", Home Team Wins: " << (Record.HOME_TEAM_WINS ? "Yes" : "No")
                   << std::endl;
     }
+    */
 
     // Wait for user input before closing
-    cout << "Experiment 1" << endl;
+    cout << NumberofNodes << endl;
     cout << "NumberofRecords: " << recordnumber << endl;
     cout << "SizeofRecord: " << sizeof(Record) << "Bytes" << endl;
     std::cout << "Press Enter to continue...";
