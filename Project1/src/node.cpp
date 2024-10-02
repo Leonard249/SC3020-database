@@ -3,14 +3,14 @@
 #include <vector>     //Used for initialising keys and pointers
 #include <algorithm>  //Used for sorting vector
 
-
+using namespace std;
 class Node {
 private:
     bool isLeaf;                    //Determined whether node is leaf
-    int currkeysize;                   //Current number of keys               
+    int currkeysize;                //Current number of keys               
     int maxsize;                    //Max number of keys in a node    
-    std::vector<int> keys;          //Array of Keys 
-    std::vector<Node*> pointers;    //Array of pointers pointing to child nodes/records
+    vector<int> keys;          //Array of Keys 
+    vector<Node*> pointers;    //Array of pointers pointing to child nodes/records
 
 public:
     Node(bool isLeaf, int maxsize) : isLeaf(isLeaf), currsize(0), maxsize(0), keys(), pointers() {}   //Constructor
@@ -23,21 +23,24 @@ public:
         isLeaf = Leaf;
     }
 
-    std::vector<int>& getKeys() {
+    vector<int>& getKeys() {
         return keys;
     }
 
     void addKey(int key) {
-        if (currsize < maxsize) {                // Check if there is space for more keys
-            keys.push_back(key);
-            currsize++;                          // Increment the number of keys
-            std::sort(keys.begin(), keys.end()); // Sort the keys (optional)
-        } else {
-            std::cout << "Cannot add key: node is full." << std::endl;
+        if (currsize < maxsize)  //if node not empty 
+        {               
+            for(int i=0;i<currsizei++){
+
+            }
+        } 
+        else 
+        {
+            cout << "Cannot add key: node is full." << endl;
         }
     }
 
-    std::vector<Node*>& getPointers() {
+    vector<Node*>& getPointers() {
         return pointers;
     }
 
