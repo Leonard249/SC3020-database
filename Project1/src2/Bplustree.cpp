@@ -25,9 +25,37 @@ class Node
     }
 
     ~Node(){
-        
+
     }
 
 
 };
+
+class Bplustree
+{
+    public:
+        Node* root;
+
+        //Constructor
+        Bplustree();    
+
+        //Functions
+        void deleteNode();
+        void searchKey();
+        void display();
+        void getRoot();
+        void insert();
+        
+
+
+};
+
+Bplustree::Bplustree(/* args */)
+{
+}
+
+Bplustree::~Bplustree()
+{
+}
+
 
