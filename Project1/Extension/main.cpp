@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <chrono>
 #include "disk.h"
 #include "Bplustree.h"
 
@@ -117,11 +118,16 @@ int main()
     std::cout << "NumberofLayers: " << layers << endl;
 
     // Task 3
-
+    auto start = std::chrono::high_resolution_clock::now()
     std::vector<Record> results = tree.searchKey(0.500, 0.800);
+    auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double> elapsed = end - start;
+    
+
     std::cout << "Results: " << endl;
     
-    for (const auto &record : results)
+    /*for (const auto &record : results)
     {
         std::cout << "Game Date: " << record.GAME_DATE_EST
                   << ", Team ID: " << record.TEAM_ID_home
@@ -129,8 +135,10 @@ int main()
                   << ", FG%: " << record.FG_PCT_home
                   << std::endl;
     }
+    */
 
     cout << "number of results: " << results.size() << endl;
+    std::cout << "Elapsed time: " << elapsed.count() << " seconds" << std::endl;
     std::cout << "Press Enter to continue...";
     std::cin.ignore(); // Ignore any newline character left in the input buffer
     std::cin.get();    // Wait for the user to press Enter
