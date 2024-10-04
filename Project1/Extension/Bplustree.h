@@ -35,7 +35,7 @@ public:
     int maxkeysize;
 
     // Constructor
-    Bplustree(int maxkeysize,Disk disk);
+    Bplustree(int maxkeysize,Disk* disk);
     ;
     ~Bplustree();
     // Methods
