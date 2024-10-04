@@ -63,7 +63,7 @@ int main()
             record.REB_home = std::stoi(value);                          // Convert to int
             std::getline(dataStream, value, '\t');                       // Ninth value: HOME_TEAM_WINS
             record.HOME_TEAM_WINS = static_cast<bool>(std::stoi(value)); // Convert to bool
-            //cout << "record" << endl;
+            // cout << "record" << endl;
         }
         catch (const std::invalid_argument &e)
         {
@@ -78,12 +78,12 @@ int main()
         }
 
         Record *recordPtr = (*disk).writeRecord(record);
-        //cout << "inserting..." << endl;
+        // cout << "inserting..." << endl;
         tree.insertKey(record.FG_PCT_home, recordPtr);
-        //cout << "insertcomplete" << endl;
+        // cout << "insertcomplete" << endl;
         recordnumber++;
-        //cout << recordnumber << endl;
-        // records.push_back(record);
+        // cout << recordnumber << endl;
+        //  records.push_back(record);
     }
     /*
     // Output the records
@@ -114,9 +114,17 @@ int main()
     std::cout << "===========================================================================" << std::endl;
 
     // Task 2
-    std::cout << "NumberofNodes: " << NumberofNodes << endl;
-    std::cout << "NumberofLayers: " << layers << endl;
-    
+    std::cout << "===========================================================================" << std::endl;
+    std::cout << "Task 2:" << std::endl;
+    std::cout << "Number of Nodes: " << NumberofNodes << endl;
+    std::cout << "Number of Levels: " << layers << endl;
+    std::cout << "Root Node Keys: " << endl;
+    for (size_t i = 0; i < tree.root->keys.size(); ++i)
+    {
+        std::cout << tree.root->keys[i] << " , "; // Access elements using the index
+    }
+    cout << endl;
+    std::cout << "===========================================================================" << std::endl;
 
     // Task 3
     auto start = std::chrono::high_resolution_clock::now();
@@ -124,10 +132,9 @@ int main()
     auto end = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double> elapsed = end - start;
-    
 
     std::cout << "Results: " << endl;
-    
+
     /*for (const auto &record : results)
     {
         std::cout << "Game Date: " << record.GAME_DATE_EST
@@ -137,7 +144,7 @@ int main()
                   << std::endl;
     }
     */
-    //Time Track for Bruteforce
+    // Time Track for Bruteforce
     auto start2 = std::chrono::high_resolution_clock::now();
     int blockAccesedB = disk->linearScan();
     auto end2 = std::chrono::high_resolution_clock::now();
@@ -146,7 +153,7 @@ int main()
     cout << "number of results: " << results.size() << endl;
     std::cout << "Elapsed time: " << elapsed.count() << " seconds" << std::endl;
     std::cout << "NumberofIO:" << NumberofIO << endl;
-    std::cout << "Number Of Data Block accessed through brute force: " << blockAccesedB <<endl;
+    std::cout << "Number Of Data Block accessed through brute force: " << blockAccesedB << endl;
     std::cout << "Elapsed time (Brute Force) : " << elapsed2.count() << " seconds" << std::endl;
     std::cout << "Press Enter to continue...";
     std::cin.ignore(); // Ignore any newline character left in the input buffer
