@@ -2,15 +2,18 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <set>
 #include <fstream> // For file handling
 
 #include "Record.h"
 #include "Bplustree.h"
+#include "disk.h"
 
 using namespace std;
 int NumberofNodes = 0;
 int layers = 0;
 int NumberofIO = 0;
+
 // Node Class Constructor
 Node::Node(int maxkeysize, bool isLeaf)
 {
@@ -38,7 +41,7 @@ Node::Node(int maxkeysize, bool isLeaf)
 Node::~Node() {};
 
 // B+ Tree Class Constructor
-Bplustree::Bplustree(int maxkeysize) : maxkeysize(maxkeysize),
+Bplustree::Bplustree(int maxkeysize,Disk* disk) : maxkeysize(maxkeysize),disk(disk),
                                        root(nullptr) {}
 
 // B+ Tree Class Destructor
@@ -407,6 +410,8 @@ Node *Bplustree::findParent(Node *cursor, Node *child)
 
 vector<Record> Bplustree::searchKey(float minKey, float maxKey)
 {
+    int blockid;
+    set<int> blockaccessed;
     std::vector<Record> results;
     Node *node = root;
     NumberofIO++; //access the root
@@ -433,19 +438,26 @@ vector<Record> Bplustree::searchKey(float minKey, float maxKey)
     {
         for (const auto &Record : node->recordPointers)
         {
+            blockid = disk->getBlockID(Record);
+            blockaccessed.insert(blockid);
+                
             if (Record->FG_PCT_home > maxKey)
             {
                 cout << "More than key : " << Record->FG_PCT_home << endl;
+                cout << "Number of Block accesed: " << blockaccessed.size() << endl;
                 return results; // Exit the function or break out of the loop
             }
             if (Record->FG_PCT_home >= minKey && Record->FG_PCT_home <= maxKey)
             {
                 results.push_back(*Record);
+                
+
             }
         }
         node = node->nextnode;
         NumberofIO++; //go to next leaf node
     }
+    cout << "Number of Block accesed: " << blockaccessed.size() << endl;
     return results;
 }
 

@@ -1,6 +1,8 @@
 #ifndef BPLUSTREE_H
 #define BPLUSTREE_H
 
+
+#include "disk.h"
 using namespace std;
 extern int NumberofNodes;
 extern int layers;
@@ -28,6 +30,7 @@ class Bplustree
 {
 public:
     // Declare Variable
+    Disk* disk; 
     Node *root = nullptr; // Initialise Empty Tree
     int maxkeysize;
 
