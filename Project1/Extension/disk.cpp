@@ -73,3 +73,23 @@ Record* Disk::getRecord(int BlockIDX, size_t recordOffset){
     size_t offset = BlockIDX * blockSize + recordOffset;
     return reinterpret_cast<Record *> (startAddress + offset);
 }
+
+int Disk::linearScan() {
+    int accessedBlocks = 0; // Initialize accessed blocks count
+
+    // Iterate over all used blocks
+    for (int blockID = 0; blockID < numberOfUsedBlocks; blockID++) {
+        accessedBlocks++; // Count this block access
+        // Calculate the address of the block
+        unsigned char* blockAddress = startAddress + (blockID * blockSize);
+
+        // Iterate over records in this block
+        for (size_t offset = 0; offset < curBlockUsedMemory; offset += recordSize) {
+            Record* currentRecord = reinterpret_cast<Record*>(blockAddress + offset);
+            // Here you can perform operations with currentRecord, e.g., print or process the record
+            // For example:
+            // currentRecord->print(); // Assuming a print method exists in Record class
+        }
+    }
+    return accessedBlocks; // Return the total number of accessed blocks
+}

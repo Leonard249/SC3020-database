@@ -137,10 +137,17 @@ int main()
                   << std::endl;
     }
     */
+    //Time Track for Bruteforce
+    auto start2 = std::chrono::high_resolution_clock::now();
+    int blockAccesedB = disk->linearScan();
+    auto end2 = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> elapsed2 = end - start;
 
     cout << "number of results: " << results.size() << endl;
     std::cout << "Elapsed time: " << elapsed.count() << " seconds" << std::endl;
     std::cout << "NumberofIO:" << NumberofIO << endl;
+    std::cout << "Number Of Data Block accessed through brute force: " << blockAccesedB <<endl;
+    std::cout << "Elapsed time (Brute Force) : " << elapsed2.count() << " seconds" << std::endl;
     std::cout << "Press Enter to continue...";
     std::cin.ignore(); // Ignore any newline character left in the input buffer
     std::cin.get();    // Wait for the user to press Enter

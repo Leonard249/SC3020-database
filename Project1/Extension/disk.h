@@ -34,6 +34,8 @@ class Disk {
         int getBlockID (Record *record);
 
         Record* getRecord (int blockIDx, size_t recordOffset);
+
+        int linearScan();
 };
 
 #endif
