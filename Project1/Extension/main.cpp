@@ -33,7 +33,7 @@ int main()
 
     // Initialise B+ Tree with max node of 5
 
-    Bplustree tree = Bplustree(4);
+    Bplustree tree = Bplustree(4,disk);
     // Read the subsequent lines (data) into a vector of Records
 
     std::vector<Record> records;
