@@ -141,7 +141,7 @@ int main()
     auto start2 = std::chrono::high_resolution_clock::now();
     int blockAccesedB = disk->linearScan();
     auto end2 = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> elapsed2 = end - start;
+    std::chrono::duration<double> elapsed2 = end2 - start2;
 
     cout << "number of results: " << results.size() << endl;
     std::cout << "Elapsed time: " << elapsed.count() << " seconds" << std::endl;
