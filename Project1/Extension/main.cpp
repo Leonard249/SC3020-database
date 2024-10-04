@@ -118,7 +118,7 @@ int main()
     std::cout << "NumberofLayers: " << layers << endl;
 
     // Task 3
-    auto start = std::chrono::high_resolution_clock::now()
+    auto start = std::chrono::high_resolution_clock::now();
     std::vector<Record> results = tree.searchKey(0.500, 0.800);
     auto end = std::chrono::high_resolution_clock::now();
 
