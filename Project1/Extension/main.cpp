@@ -116,6 +116,7 @@ int main()
     // Task 2
     std::cout << "NumberofNodes: " << NumberofNodes << endl;
     std::cout << "NumberofLayers: " << layers << endl;
+    
 
     // Task 3
     auto start = std::chrono::high_resolution_clock::now();
@@ -139,6 +140,7 @@ int main()
 
     cout << "number of results: " << results.size() << endl;
     std::cout << "Elapsed time: " << elapsed.count() << " seconds" << std::endl;
+    std::cout << "NumberofIO:" << NumberofIO << endl;
     std::cout << "Press Enter to continue...";
     std::cin.ignore(); // Ignore any newline character left in the input buffer
     std::cin.get();    // Wait for the user to press Enter

@@ -10,6 +10,7 @@
 using namespace std;
 int NumberofNodes = 0;
 int layers = 0;
+int NumberofIO = 0;
 // Node Class Constructor
 Node::Node(int maxkeysize, bool isLeaf)
 {
@@ -408,12 +409,14 @@ vector<Record> Bplustree::searchKey(float minKey, float maxKey)
 {
     std::vector<Record> results;
     Node *node = root;
+    NumberofIO++; //access the root
     // Find the leaf node to start the search
     while (node && !node->isLeaf)
     {
         auto it = std::lower_bound(node->keys.begin(), node->keys.end(), minKey);
         int index = std::distance(node->keys.begin(), it);
         node = node->pointers[index];
+        NumberofIO++; // everytime it traverse to another node....
         /*
         if (node->keys[index] == minKey)
         {
@@ -441,6 +444,7 @@ vector<Record> Bplustree::searchKey(float minKey, float maxKey)
             }
         }
         node = node->nextnode;
+        NumberofIO++; //go to next leaf node
     }
     return results;
 }

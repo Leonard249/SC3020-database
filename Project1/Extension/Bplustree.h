@@ -4,6 +4,7 @@
 using namespace std;
 extern int NumberofNodes;
 extern int layers;
+extern int NumberofIO;
 class Node
 {
 public:
