@@ -196,7 +196,7 @@ void Bplustree::insertInternal(float key, Node *cursor, Node *leftchild, Node *r
     // Check if there's still space in the node for a new key
     if (cursor->currkeysize < maxkeysize)
     {
-        cout << "Inserting key without splitting" << endl;
+        //cout << "Inserting key without splitting" << endl;
 
         // Find the correct position to insert the new key
         auto it = find(cursor->pointers.begin(), cursor->pointers.end(), leftchild);
@@ -211,7 +211,7 @@ void Bplustree::insertInternal(float key, Node *cursor, Node *leftchild, Node *r
     else
     {
         // If full, split the node
-        cout << "Node is full, splitting" << endl;
+        //cout << "Node is full, splitting" << endl;
         splitInternalNode(cursor, key, leftchild, rightchild);
     }
 }
@@ -265,7 +265,7 @@ void Bplustree::splitInternalNode(Node *cursor, float key, Node *leftchild, Node
     // If cursor is the root, create a new root
     if (cursor == root)
     {
-        cout << "Creating new root" << endl;
+        //cout << "Creating new root" << endl;
         Node *newRoot = new Node(maxkeysize, false);
         newRoot->keys.push_back(virtualKey[split - 1]); // Use push_back to add the first key
         newRoot->pointers.push_back(cursor);            // Link to the current leaf
