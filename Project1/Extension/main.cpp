@@ -132,7 +132,7 @@ int main()
     auto end = std::chrono::high_resolution_clock::now();
 
     std::chrono::duration<double> elapsed = end - start;
-
+    std::cout << "Task 2:" << std::endl;
     std::cout << "Results: " << endl;
 
     /*for (const auto &record : results)
@@ -162,7 +162,7 @@ int main()
     std::cout << "Number Of Data Block accessed through brute force: " << blockAccesedB << endl;
     std::cout << "Average FG3_PCT_home: " << avg << endl;
     std::cout << "Elapsed time (Brute Force) : " << elapsed2.count() << " seconds" << std::endl;
-    std::cout << "Press Enter to continue...";
+    std::cout << "===========================================================================" << std::endl;
     std::cin.ignore(); // Ignore any newline character left in the input buffer
     std::cin.get();    // Wait for the user to press Enter
 
