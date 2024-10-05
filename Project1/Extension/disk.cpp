@@ -58,6 +58,7 @@ Record *Disk::writeRecord(Record record)
     return recordAddress;
 }
 
+// Delete a record by deleting the address of the record
 void Disk::deleteRecord(Record *address)
 {
     delete address;
