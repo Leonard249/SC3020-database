@@ -24,17 +24,6 @@ Node::Node(int maxkeysize, bool isLeaf)
     this->minleafkeysize = (maxkeysize + 1) / 2;
     this->nextnode = nullptr;
     NumberofNodes++;
-    /*
-    this->keys.resize(0);
-    if (isLeaf)
-    {
-        recordPointers.resize(maxkeysize);
-    }
-    else if (!isLeaf)
-    {
-        pointers.resize(maxkeysize + 1);
-    }
-    */
 }
 
 // Node Class Destructor
@@ -196,91 +185,6 @@ void Bplustree::splitLeafNode(Node *cursor, float key, Record *record)
     }
 }
 
-/*void Bplustree::splitLeafNode(Node* cursor,float key,Record* record)
-{
-    vector<float> virtualKey(cursor->keys);
-    cout << "sizecursor " << cursor->keys.size() << endl;
-    cout << "sIZE4 "<<  virtualKey.size() << endl;
-    vector<Record *> virtualRecordPointers(cursor->recordPointers);
-    bool insert = false;
-    for(int i=0;i<virtualKey.size();i++)
-    {
-        cout << "i = " << i <<endl;
-        if(virtualKey[i]>key)
-        {
-            virtualKey.insert(virtualKey.begin()+i,key);  //insert at position i+1 and shift everything else back
-            virtualRecordPointers.insert(virtualRecordPointers.begin()+i,record);
-            insert = true;
-            break;
-        }
-    }
-    cout << "sIZE2 "<<  virtualKey.size() << endl;
-    if(insert==false)
-    {
-        virtualKey.push_back(key);
-        virtualRecordPointers.push_back(record);
-
-    }
-    cout << "sIZE3 "<<  virtualKey.size() << endl;
-    int split = (maxkeysize + 1) / 2;
-    Node *newLeaf = new Node(maxkeysize, true);
-    cout<< "split value" <<split <<endl;
-    cursor->currkeysize = split;
-    cout<< "split value" << cursor->currkeysize <<endl;
-    for (int i = 0; i < split; i++)
-    {
-        cursor->keys[i] = virtualKey[i];
-        cursor->recordPointers[i] = virtualRecordPointers[i];
-    }
-
-    cursor->keys.resize(split);                          //Resize vector array
-    cursor->recordPointers.resize(split);
-    cout << "sIZE "<<  virtualKey.size() << endl;
-    for (int i = split, j = 0; i < virtualKey.size(); i++, j++)
-    {
-        cout<< i << endl;
-        newLeaf->keys[j] = virtualKey[i];
-        newLeaf->recordPointers[j] = virtualRecordPointers[i];
-        newLeaf->currkeysize++;
-    }
-
-    newLeaf->nextnode = cursor->nextnode;
-    cursor->nextnode = newLeaf;
-
-    if (cursor == root)
-    {
-        cout << "test12" <<endl;
-        Node *newRoot = new Node(maxkeysize, false);
-        newRoot->keys[0] = newLeaf->keys[0];
-        newRoot->pointers[0] = cursor;
-        newRoot->pointers[1] = newLeaf;
-        newRoot->currkeysize = 1;
-        root = newRoot;
-    }
-    else
-    {
-        insertInternal(newLeaf->keys[0], findParent(root, cursor), newLeaf);
-    }
-}*/
-
-/*void Bplustree::insertInternal(float key,Node* cursor, Node* child)
-{
-    cout << "insert internal" << endl;
-    if (cursor->currkeysize < maxkeysize)
-    {
-        cout<< 123454 << endl;
-        int i = 0;
-        while (key > cursor->keys[i] && i < cursor->currkeysize)
-            i++;
-        cursor->keys.insert(cursor->keys.begin() + i, key);
-        cursor->pointers.insert(cursor->pointers.begin() + i + 1, child);
-        cursor->currkeysize++;
-    }
-    else
-    {
-        splitInternalNode(cursor, key, child);
-    }
-}*/
 
 void Bplustree::insertInternal(float key, Node *cursor, Node *leftchild, Node *rightchild)
 {
@@ -302,17 +206,6 @@ void Bplustree::insertInternal(float key, Node *cursor, Node *leftchild, Node *r
         cursor->keys.insert(cursor->keys.begin() + index, key);
         cursor->pointers.insert(cursor->pointers.begin() + index + 1, rightchild); // Ensure correct position for child pointer
         cursor->currkeysize++;
-        /*
-        int i = 0;
-        while (i < cursor->currkeysize && key >= cursor->keys[i])
-        {
-            i++;
-        }
-        // Insert the key and child pointer
-        cursor->keys.insert(cursor->keys.begin() + i, key);
-        cursor->pointers.insert(cursor->pointers.begin() + i + 1, child); // Ensure correct position for child pointer
-        cursor->currkeysize++;
-        */
         // Increment the current key size
     }
     else
@@ -422,15 +315,6 @@ vector<Record> Bplustree::searchKey(float minKey, float maxKey)
         int index = std::distance(node->keys.begin(), it);
         node = node->pointers[index];
         NumberofIO++; // everytime it traverse to another node....
-        /*
-        if (node->keys[index] == minKey)
-        {
-            node = node->pointers[index - 1];
-        }
-        else
-        {
-            node = node->pointers[index];
-        }*/
     }
 
     // Collect records within the range
