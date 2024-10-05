@@ -79,7 +79,7 @@ int main()
         Record *recordPtr = (*disk).writeRecord(record);
         tree.insertKey(record.FG_PCT_home, recordPtr);
         recordnumber++;
-        }
+    }
     // Wait for user input before closing
     std::cout << "Number of invalid Record: " << invalidrec << std::endl;
 
@@ -120,7 +120,7 @@ int main()
     double sum = 0.0;
     for (const auto &record : results)
     {
-        sum += record.FG3_PCT_home;
+        sum += record.FG_PCT_home;
     }
     double avg = sum / results.size();
 
@@ -128,7 +128,7 @@ int main()
     std::cout << "Elapsed time: " << elapsed.count() << " seconds" << std::endl;
     std::cout << "NumberofIO:" << NumberofIO << endl;
     std::cout << "Number Of Data Block accessed through brute force: " << blockAccesedB << endl;
-    std::cout << "Average FG3_PCT_home: " << avg << endl;
+    std::cout << "Average FG_PCT_home: " << avg << endl;
     std::cout << "Elapsed time (Brute Force) : " << elapsed2.count() << " seconds" << std::endl;
     std::cout << "===========================================================================" << std::endl;
     std::cin.ignore(); // Ignore any newline character left in the input buffer
