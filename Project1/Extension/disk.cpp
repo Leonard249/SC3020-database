@@ -9,46 +9,48 @@
 
 using namespace std;
 
-
-//declare disk
-Disk::Disk (size_t diskSize, size_t blockSize, size_t recordSize) {
-    startAddress = (unsigned char*)malloc(diskSize);
-    this -> diskSize = diskSize;
-    this -> blockSize = blockSize;
-    this -> recordSize = recordSize;
+// declare disk
+Disk::Disk(size_t diskSize, size_t blockSize, size_t recordSize)
+{
+    startAddress = (unsigned char *)malloc(diskSize);
+    this->diskSize = diskSize;
+    this->blockSize = blockSize;
+    this->recordSize = recordSize;
     numberOfUsedBlocks = 0;
     curBlockUsedMemory = 0;
 }
 
-
-Disk::~Disk(){
+Disk::~Disk()
+{
     free(startAddress);
 }
 
-
-//Check if there is space to allocate a new block of memory
-//If yes, increament number of used blocks and reset current block used memory
-//If not, print disk memory is full and return false
-bool Disk::canAllocateBlock (){
-    //Check if any more space in entire disk
-    if (blockSize * (numberOfUsedBlocks + 1) > diskSize) {
+// Check if there is space to allocate a new block of memory
+// If yes, increment number of used blocks and reset current block used memory
+// If not, print disk memory is full and return false
+bool Disk::canAllocateBlock()
+{
+    // Check if any more space in entire disk
+    if (blockSize * (numberOfUsedBlocks + 1) > diskSize)
+    {
         cout << "Disk Memory Full" << endl;
         return false;
     }
     numberOfUsedBlocks++;
     curBlockUsedMemory = 0;
     return true;
-    
 }
 
-//Write record to a block in the disk and return address of record
-Record* Disk::writeRecord (Record record){
-    //Check if there is sufficient space in current block
-    if ((curBlockUsedMemory + recordSize) >blockSize){
+// Write record to a block in the disk and return address of record
+Record *Disk::writeRecord(Record record)
+{
+    // Check if there is sufficient space in current block
+    if ((curBlockUsedMemory + recordSize) > blockSize)
+    {
         if (!canAllocateBlock())
             return nullptr;
     }
-    Record* recordAddress = reinterpret_cast<Record*>(startAddress + numberOfUsedBlocks * blockSize + curBlockUsedMemory);
+    Record *recordAddress = reinterpret_cast<Record *>(startAddress + numberOfUsedBlocks * blockSize + curBlockUsedMemory);
     if (numberOfUsedBlocks == 0)
         numberOfUsedBlocks++;
     curBlockUsedMemory += recordSize;
@@ -56,39 +58,42 @@ Record* Disk::writeRecord (Record record){
     return recordAddress;
 }
 
-void Disk::deleteRecord(Record* address){
+void Disk::deleteRecord(Record *address)
+{
     delete address;
 }
 
-//Return blockID by taking a pointer to the record
-int Disk::getBlockID(Record* record){
-    unsigned char* recordBytes = reinterpret_cast<unsigned char*>(record);
-    ptrdiff_t offset = recordBytes-startAddress;
-    int blockID = offset/blockSize;
+// Return blockID by taking a pointer to the record
+int Disk::getBlockID(Record *record)
+{
+    unsigned char *recordBytes = reinterpret_cast<unsigned char *>(record);
+    ptrdiff_t offset = recordBytes - startAddress;
+    int blockID = offset / blockSize;
     return blockID;
 }
 
-//Use position of blockID and recordOffset to get address of specific record
-Record* Disk::getRecord(int BlockIDX, size_t recordOffset){
+// Use position of blockID and recordOffset to get address of specific record
+Record *Disk::getRecord(int BlockIDX, size_t recordOffset)
+{
     size_t offset = BlockIDX * blockSize + recordOffset;
-    return reinterpret_cast<Record *> (startAddress + offset);
+    return reinterpret_cast<Record *>(startAddress + offset);
 }
 
-int Disk::linearScan() {
+int Disk::linearScan()
+{
     int accessedBlocks = 0; // Initialize accessed blocks count
 
     // Iterate over all used blocks
-    for (int blockID = 0; blockID < numberOfUsedBlocks; blockID++) {
+    for (int blockID = 0; blockID < numberOfUsedBlocks; blockID++)
+    {
         accessedBlocks++; // Count this block access
         // Calculate the address of the block
-        unsigned char* blockAddress = startAddress + (blockID * blockSize);
+        unsigned char *blockAddress = startAddress + (blockID * blockSize);
 
         // Iterate over records in this block
-        for (size_t offset = 0; offset < curBlockUsedMemory; offset += recordSize) {
-            Record* currentRecord = reinterpret_cast<Record*>(blockAddress + offset);
-            // Here you can perform operations with currentRecord, e.g., print or process the record
-            // For example:
-            // currentRecord->print(); // Assuming a print method exists in Record class
+        for (size_t offset = 0; offset < curBlockUsedMemory; offset += recordSize)
+        {
+            Record *currentRecord = reinterpret_cast<Record *>(blockAddress + offset);
         }
     }
     return accessedBlocks; // Return the total number of accessed blocks
