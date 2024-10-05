@@ -33,7 +33,7 @@ int main()
 
     // Initialise B+ Tree with max node of 5
 
-    Bplustree tree = Bplustree(4,disk);
+    Bplustree tree = Bplustree(4, disk);
     // Read the subsequent lines (data) into a vector of Records
 
     std::vector<Record> records;
@@ -149,11 +149,17 @@ int main()
     int blockAccesedB = disk->linearScan();
     auto end2 = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed2 = end2 - start2;
+    double sum = 0.0;
+    for (const auto &record : results)
+    {
+        sum += record.FG3_PCT_home;
+    }
+    double avg = sum / results.size();
 
     cout << "number of results: " << results.size() << endl;
     std::cout << "Elapsed time: " << elapsed.count() << " seconds" << std::endl;
     std::cout << "NumberofIO:" << NumberofIO << endl;
-    std::cout << "Number Of Data Block accessed through brute force: " << blockAccesedB <<endl;
+    std::cout << "Number Of Data Block accessed through brute force: " << blockAccesedB << endl;
     std::cout << "Average FG3_PCT_home: " << avg << endl;
     std::cout << "Elapsed time (Brute Force) : " << elapsed2.count() << " seconds" << std::endl;
     std::cout << "Press Enter to continue...";
