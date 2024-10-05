@@ -118,7 +118,8 @@ int main()
     std::cout << "Task 2:" << std::endl;
     std::cout << "Number of Nodes: " << NumberofNodes << endl;
     std::cout << "Number of Levels: " << layers << endl;
-    std::cout << "Root Node Keys: " << endl;
+    std::cout << "Parameter N of the B+ Tree: 4" << endl;
+    std::cout << "Root Node Keys: " << endl;    
     for (size_t i = 0; i < tree.root->keys.size(); ++i)
     {
         std::cout << tree.root->keys[i] << " , "; // Access elements using the index
