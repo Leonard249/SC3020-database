@@ -63,7 +63,6 @@ int main()
             record.REB_home = std::stoi(value);                          // Convert to int
             std::getline(dataStream, value, '\t');                       // Ninth value: HOME_TEAM_WINS
             record.HOME_TEAM_WINS = static_cast<bool>(std::stoi(value)); // Convert to bool
-            // cout << "record" << endl;
         }
         catch (const std::invalid_argument &e)
         {
@@ -78,29 +77,9 @@ int main()
         }
 
         Record *recordPtr = (*disk).writeRecord(record);
-        // cout << "inserting..." << endl;
         tree.insertKey(record.FG_PCT_home, recordPtr);
-        // cout << "insertcomplete" << endl;
         recordnumber++;
-        // cout << recordnumber << endl;
-        //  records.push_back(record);
-    }
-    /*
-    // Output the records
-    std::cout << "Records: " << std::endl;
-    for (const auto& record : records) {
-        std::cout << "Game Date: " << record.GAME_DATE_EST
-                  << ", Team ID: " << record.TEAM_ID_home
-                  << ", Points: " << record.PTS_home
-                  << ", FG%: " << record.FG_PCT_home
-                  << ", FT%: " << record.FT_PCT_home
-                  << ", FG3%: " << record.FG3_PCT_home
-                  << ", Assists: " << record.AST_home
-                  << ", Rebounds: " << record.REB_home
-                  << ", Home Team Wins: " << (record.HOME_TEAM_WINS ? "Yes" : "No")
-                  << std::endl;
-    }
-    */
+        }
     // Wait for user input before closing
     std::cout << "Number of invalid Record: " << invalidrec << std::endl;
 
@@ -133,16 +112,6 @@ int main()
     auto end = std::chrono::high_resolution_clock::now();
     std::chrono::duration<double> elapsed = end - start;
     std::cout << "Results: " << endl;
-
-    /*for (const auto &record : results)
-    {
-        std::cout << "Game Date: " << record.GAME_DATE_EST
-                  << ", Team ID: " << record.TEAM_ID_home
-                  << ", Points: " << record.PTS_home
-                  << ", FG%: " << record.FG_PCT_home
-                  << std::endl;
-    }
-    */
     // Time Track for Bruteforce
     auto start2 = std::chrono::high_resolution_clock::now();
     int blockAccesedB = disk->linearScan();
