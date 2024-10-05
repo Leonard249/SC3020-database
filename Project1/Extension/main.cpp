@@ -127,12 +127,11 @@ int main()
     std::cout << "===========================================================================" << std::endl;
 
     // Task 3
+    std::cout << "Task 3:" << std::endl;
     auto start = std::chrono::high_resolution_clock::now();
     std::vector<Record> results = tree.searchKey(0.500, 0.800);
     auto end = std::chrono::high_resolution_clock::now();
-
     std::chrono::duration<double> elapsed = end - start;
-    std::cout << "Task 2:" << std::endl;
     std::cout << "Results: " << endl;
 
     /*for (const auto &record : results)
